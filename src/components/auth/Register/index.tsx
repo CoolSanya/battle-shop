@@ -33,21 +33,37 @@ const RegisterPage = () => {
         <div className="col-md-6 offset-md-3">
           <h1 className="text-center">Реєстрація</h1>
           <form onSubmit={handleSubmit}>
-            {/* <InputGroup
-              label="Пошта"
-              value={model.email}
-              field="surname"
-              type="email"
-              onChange={hadleChange}
-            />
-
             <InputGroup
               label="Ім'я"
               value={model.name}
               field="name"
               type="text"
               onChange={hadleChange}
-            /> */}
+            />
+
+            <InputGroup
+              label="Пошта"
+              value={model.email}
+              field="email"
+              type="email"
+              onChange={hadleChange}
+            />
+
+            <InputGroup
+              label="Пароль"
+              value={model.password}
+              field="password"
+              type="password"
+              onChange={hadleChange}
+            /> 
+
+            <InputGroup
+              label="Підтвердження пароля"
+              value={model.password_confirmation}
+              field="password_confirmation"
+              type="password"
+              onChange={hadleChange}
+            /> 
 
             <button type="submit" className="btn btn-primary">
               Реєстрація
