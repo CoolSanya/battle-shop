@@ -29,6 +29,14 @@ const Header = () => {
               </Link>
             </li>
           </ul>
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            <li className="nav-item">
+              <Link className="nav-link" to="/products">
+                Продукти
+              </Link>
+            </li>
+          </ul>
+          
           {isAuth ? (
             <ul className="navbar-nav">
               <li className="nav-item">
