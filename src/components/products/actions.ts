@@ -1,28 +1,25 @@
-import { ProductAction, IProduct, IProductsResponce, ProductActionTypes } from "./types";
-
 import { Dispatch } from "react";
 import http from "../../http_common";
-import axios from "axios";
+import { ProductActions, IProductsResponse, ProductsActionTypes, ISearchProduct } from "./types";
 
-export const getProducts = () => {
-    return async (dispatch: Dispatch<ProductAction>) => {
-        try {
-            const responce = await http.get<IProductsResponce>('api/products')
-
-            const {data} = responce.data;
-            SetProducts(data, dispatch);
-        } catch (error) {
-            if (axios.isAxiosError(error)) {
-                console.log("Message error: ", error);
-                
-            }
-        }
+export const fetchProducts = (search: ISearchProduct) => {
+  return async (dispatch: Dispatch<ProductActions>) => {
+    try {
+      const response = await http.get<IProductsResponse>("api/products", {
+        params: search
+      });
+      const { data, per_page } = response.data;
+      dispatch({
+        type: ProductsActionTypes.FETCH_PRODUCTS,
+        payload: {
+          per_page: per_page,
+          products: data
+        },
+      });
+      return Promise.resolve();
+    } catch (ex) {
+      console.log("Problem fetch");
+      return Promise.reject();
     }
-}
-
-export const SetProducts = (data: Array<IProduct>, dispatch: Dispatch<ProductAction>) => {
-    dispatch({
-        type: ProductActionTypes.GET_PRUODUCTS,
-        payload: data,
-    });
-}
+  };
+};

@@ -1,30 +1,32 @@
-export enum ProductActionTypes {
-    GET_PRUODUCTS = "GET_ALL_PRODUCTS"
+export enum ProductsActionTypes {
+    FETCH_PRODUCTS="FETCH_PRODUCTS"
 }
 
-export interface IProduct {
-    id: number,
-    name: string,
-    detail: string,
+export interface IProductItem {
+    id: number;
+    name: string;
+    detail: string;
+} 
+
+export interface IProductsResponse {
+    current_page: number;
+    per_page: number;
+    data: Array<IProductItem>;
 }
 
-export interface IProductsResponce {
-    data: Array<IProduct>,
-    success: boolean,
-    message: string,
+export interface ISearchProduct {
+    page: number|string
 }
 
-export type ProductsErrors = {
-    error: string,
+export interface ProductsState {
+    products: Array<IProductItem>;
+    per_page: number;
 }
 
-export interface ProductState {
-    products: Array<IProduct>,
+
+export interface FetchProductsAction {
+    type: ProductsActionTypes.FETCH_PRODUCTS,
+    payload: ProductsState
 }
 
-export interface ProductGetAction {
-    type: ProductActionTypes.GET_PRUODUCTS,
-    payload: Array<IProduct>,
-}
-
-export type ProductAction = ProductGetAction;
+export type ProductActions = FetchProductsAction;

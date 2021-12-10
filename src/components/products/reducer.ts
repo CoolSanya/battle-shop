@@ -1,17 +1,21 @@
-import { ProductAction, ProductState, ProductActionTypes } from "./types";
+import {ProductActions, ProductsActionTypes, ProductsState} from './types';
 
-const initialState: ProductState = {
+const initialState : ProductsState = {
     products: [],
+    per_page: 0
 }
 
-export const productReducer = (state = initialState, action: ProductAction): ProductState => {
-    switch (action.type) {
-        case ProductActionTypes.GET_PRUODUCTS: {
+export const productsReducer = (state = initialState, action: ProductActions) : ProductsState => {
+    switch(action.type) {
+
+        case ProductsActionTypes.FETCH_PRODUCTS:
             return {
-                ...state, products: action.payload
+                ...state,
+                products: action.payload.products,
+                per_page: action.payload.per_page
             };
-        }
         default:
-           return state;
+            return state;
     }
+    
 }
