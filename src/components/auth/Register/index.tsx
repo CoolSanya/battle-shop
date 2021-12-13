@@ -33,7 +33,7 @@ const RegisterPage = () => {
         <div className="col-md-6 offset-md-3">
           <h1 className="text-center">Реєстрація</h1>
           <form onSubmit={handleSubmit}>
-            <InputGroup
+            {/* <InputGroup
               label="Ім'я"
               value={model.name}
               field="name"
@@ -63,7 +63,7 @@ const RegisterPage = () => {
               field="password_confirmation"
               type="password"
               onChange={hadleChange}
-            /> 
+            />  */}
 
             <button type="submit" className="btn btn-primary">
               Реєстрація

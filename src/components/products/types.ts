@@ -10,17 +10,18 @@ export interface IProductItem {
 
 export interface IProductsResponse {
     current_page: number;
-    per_page: number;
+    last_page: number;
     data: Array<IProductItem>;
 }
 
 export interface ISearchProduct {
-    page: number|string
+    page?: null|string|number,
+    name?: null|string
 }
 
 export interface ProductsState {
     products: Array<IProductItem>;
-    per_page: number;
+    last_page: number;
 }
 
 
