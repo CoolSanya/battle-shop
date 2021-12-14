@@ -9,7 +9,7 @@ export interface IRegisterModel {
   password_confirmation: string;
 }
 
-export interface IUser {
+export interface IDateRegisterUser {
   name: string;
   email: string;
   password: string;
@@ -17,7 +17,7 @@ export interface IUser {
 }
 
 export interface IRegisterResponse {
-  data: IUser
+  data: IDateRegisterUser
   access: boolean,
   message: string,
 }
@@ -27,13 +27,13 @@ export type RegisterError = {
 }
 
 export interface RegisterState {
-  user: null|IUser,
+  user: null|IDateRegisterUser,
   isRegister: boolean,
 }
 
 export interface RegisterAuthAction {
   type: RegisterActionTypes.REGISTER_AUTH,
-  payload: IUser,
+  payload: IDateRegisterUser,
 }
 
 export type RegisterAction = RegisterAuthAction;
