@@ -1,27 +1,20 @@
-import {IRegisterModel, RegisterAction, RegisterActionTypes, IDateRegisterUser, IRegisterResponse, RegisterError, RegisterState, } from './types'
+import {IRegisterModel, RegisterAction, RegisterActionTypes, RegisterError } from './types'
 import {Dispatch} from "react";
 import http from '../../../http_common';
+import { AxiosError } from 'axios';
 
 export const registerUser = (data: IRegisterModel) => {
     return async (dispatch: Dispatch<RegisterAction>) => {
         try {
-            dispatch({type: RegisterActionTypes.REGISTER_AUTH, payload: data});
-            const response = await http.post<IDateRegisterUser>('api/auth/register', data);
-            dispatch({type: RegisterActionTypes.REGISTER_AUTH, payload: response.data});
+            dispatch({type: RegisterActionTypes.REGISTER_AUTH});
+            const response = await http.post('api/auth/register', data);
+            return Promise.resolve;
         }
         catch(error) {
-            dispatch({type: AuthActionTypes.LOGIN_AUTH_ERROR, payload: "Error"});
+           const serverError = error as AxiosError<RegisterError>;
+           if (serverError && serverError.response) {
+               return Promise.reject(serverError.response.data);
+           }
         }
     }
 }
-
-// return async (dispatch: Dispatch<AuthAction>) => {
-    //     try {
-    //         dispatch({type: AuthActionTypes.LOGIN_AUTH});
-    //         const response = await http.post<IUser>('api/auth/register', data);
-    //         dispatch({type: AuthActionTypes.LOGIN_AUTH_SUCCESS, payload: response.data});
-    //     }
-    //     catch(error) {
-    //         dispatch({type: AuthActionTypes.LOGIN_AUTH_ERROR, payload: "Error"});
-    //     }
-    // }

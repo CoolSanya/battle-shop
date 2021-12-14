@@ -36,13 +36,13 @@ const Header = () => {
           </ul>
           {isAuth ? (
             <ul className="navbar-nav">
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link className="nav-link" to="/profile">
                    <img src={user?.image} alt="image" className="rounded-circle" width="32" />
                    &nbsp;&nbsp;
                    {user?.email}
                 </Link>
-              </li>
+              </li> */}
               <li className="nav-item">
                 <Link className="nav-link" to="/logout">
                   Вихід

@@ -1,32 +1,81 @@
-import { useState, useRef } from "react";
-import { useNavigate } from 'react-router';
-import InputGroupFormik from "../../common/InputGroup";
-import {useActions} from '../../../hooks/useActions';
-import {IRegisterModel} from './types';
-import { Formik, Form, FormikProps } from "formik";
-import { validationFields } from "./validation";
+import { useState, useRef } from "react"
+import InputGroup from "../../common/InputGroup"
+import { useActions } from "../../../hooks/useActions"
+import { IRegisterModel } from "./types"
+import { RegisterActionTypes, RegisterError } from "./types"
+import { useNavigate } from "react-router";
+
+import {RegisterAction} from "./types"
+
+import {validationFields} from "./validation"
+import {
+    Formik,
+    FormikHelpers,
+    FormikProps,
+    Form,
+    Field,
+    FieldProps,
+} from 'formik';
+import InputGroupFormik from "../../common/InputGroupFormik"
+
+interface IRegisterFormProps {
+    handleSubmit: (e: React.FormEvent) => void
+}
+interface OtherProps {
+    title?: string;
+}
 
 
 
 const RegisterPage = () => {
 
-  const {registerUser} = useActions();
-
-  const { loginUser } = useActions();
-  const navigator = useNavigate();
-
-  const refFormik = useRef<FormikProps<IRegisterModel>>(null);
-
-  const initialState: IRegisterModel = {
+  const initialValues: IRegisterModel = {
     name: "",
     email: "",
     password: "",
     password_confirmation: "",
   };
 
-  const [invalid, setInvalid] = useState<string>("");
+  const initialErrors: RegisterError  = {
+    name: [],
+    email: [],
+    password: [],
+    error: "",
+  };
 
+  const {loginUser}  = useActions();
+  const navigator = useNavigate();
+  const refFormik = useRef<FormikProps<IRegisterModel>>(null);
+
+  const [invalid, setInvalid] = useState<string>("");
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  const [serverErrors, setServerErrors] = useState<RegisterError>(initialErrors);
+  const handleSubmit = async (values: IRegisterModel, actions: any) => {
+    setIsSubmitted(true);
+
+    try {
+      console.log("Register begin");
+      await loginUser(values);
+      console.log("Register end");
+      setIsSubmitted(false);
+      navigator("/login")
+    } catch (ex) {
+      const serverErrors = ex as RegisterError;
+      Object.entries(serverErrors).forEach(([key,value]) => {
+        if (Array.isArray(value)) {
+          let message = '';
+          value.forEach((item) => {
+            message += `${item}`;
+          });
+          refFormik.current?.setFieldError(key,message);
+        }
+      });
+      if (serverErrors.error) {
+        setInvalid(serverErrors.error);
+      }
+      setIsSubmitted(false);
+    }
+  }
 
   return (
     <>
@@ -36,59 +85,71 @@ const RegisterPage = () => {
           {invalid && <div className="alert alert-danger">{invalid}</div>}
         <Formik
           innerRef={refFormik}
-          initialValues={initialState}
+          initialValues={initialValues}
           validationSchema={validationFields}
           onSubmit={handleSubmit}
         >
-          {({
-            values,
-            errors,
-            touched,
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            isSubmitting,
+          {(props: FormikProps<IRegisterModel>) => {
+            const {
+              values,
+              errors,
+              touched,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              isSubmitting,
+            } = props
             /* and other goodies */
-          }) => (
-            <form onSubmit={handleSubmit}>
+            return (
+            <Form onSubmit={handleSubmit}>
               <InputGroupFormik
-                label="Назва"
-                error={errors.email}
-                onChange={handleChange}
-                type="name"
+                label="Ім'я"
                 field="name"
-                touched={touched.name}
+                type="text"
                 value={values.name}
+                touched = {touched.name}
+                error={errors.name}
+                onChange={handleChange}
               />
 
               <InputGroupFormik
                 label="Пошта"
-                error={errors.email}
-                onChange={handleChange}
                 type="email"
                 field="email"
-                touched={touched.email}
                 value={values.email}
+                touched={touched.email}
+                error={errors.email}
+                onChange={handleChange}
               />
 
               <InputGroupFormik
                 label="Пароль"
-                error={errors.password}
-                onChange={handleChange}
                 type="password"
                 field="password"
-                touched={touched.password}
                 value={values.password}
+                touched={touched.password}
+                error={errors.password}
+                onChange={handleChange}
+              />
+
+              <InputGroupFormik
+                label="Підтвердження паролю"
+                type="password"
+                field="password_confirmation"
+                value={values.password_confirmation}
+                touched={touched.password_confirmation}
+                error={errors.password_confirmation}
+                onChange={handleChange}
               />
               <button
                 type="submit"
                 disabled={isSubmitting}
                 className="btn btn-primary"
               >
-                Вхід
+                Зареєструватись
               </button>
-            </form>
-          )}
+            </Form>
+          )}};
         </Formik>
         </div>
       </div>
