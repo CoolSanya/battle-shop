@@ -8,8 +8,9 @@ import DefaultLayout from './components/containers/DefaultLayout';
 import AdminLayout from './components/containers/AdminLayout';
 import NoMatch from './components/NoMatch';
 import ProductsListPage from './components/products/List';
+import AddProduct from './components/products/add';
 
-function App() {
+function App () {
   return (
     <BrowserRouter>
         <Routes>
@@ -18,6 +19,7 @@ function App() {
             <Route path="login" element={<LoginPage />} />
             <Route path="register" element={<RegisterPage />} />
             <Route path="products/list" element={<ProductsListPage />} />
+            <Route path="products/add" element={<AddProduct />} />
             
             <Route path="*" element={<NoMatch />} />
           </Route>

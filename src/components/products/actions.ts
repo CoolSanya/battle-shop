@@ -1,6 +1,15 @@
 import { Dispatch } from "react";
 import http from "../../http_common";
-import { ProductActions, IProductsResponse, ProductsActionTypes, ISearchProduct } from "./types";
+import { 
+  ProductActions, 
+  IProductsResponse, 
+  ProductsActionTypes, 
+  ISearchProduct,
+  IAddProductResponse,
+  IProductItem,
+ } from "./types";
+
+ import axios, { AxiosError } from "axios";
 
 export const fetchProducts = (search: ISearchProduct) => {
   return async (dispatch: Dispatch<ProductActions>) => {
@@ -23,3 +32,16 @@ export const fetchProducts = (search: ISearchProduct) => {
     }
   };
 };
+
+export const addProduct = (product: IProductItem) => {
+  return async (dispatch: Dispatch<ProductActions>) => {
+    try {
+      const responce = await http.post<IAddProductResponse>('api/products', product);
+    } catch (ex) {
+      if (axios.isAxiosError(ex)) {
+        console.log("error: ", ex);
+        
+      }
+    }
+  }
+}

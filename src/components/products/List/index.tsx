@@ -36,14 +36,15 @@ const ProductsListPage: React.FC = () => {
     <>
       <nav className="navbar navbar-expand navbar-light bg-light">
           <div className="d-flex">
-            <button type="submit" className="btn btn-outline-primary">Add</button>&nbsp;
-              <form className="d-flex">
-              <input className="form-control me-sm-2" type="text" name="searchName" placeholder="Name"/>
-              <input className="form-control me-sm-2" type="text" name="searchDetail" placeholder="Detail"/>
-              
-              <button type="submit" className="btn btn-outline-dark">Search</button>&nbsp;
-              <button type="submit" className="btn btn-outline-dark">Reset</button>
-              </form>
+            <Link className="btn btn-outline-primary" to="/products/add">Add product</Link>&nbsp;
+            {/* <button type="submit" className="btn btn-outline-primary">Add</button>&nbsp; */}
+            <form className="d-flex">
+            <input className="form-control me-sm-2" type="text" name="searchName" placeholder="Name"/>
+            <input className="form-control me-sm-2" type="text" name="searchDetail" placeholder="Detail"/>
+            
+            <button type="submit" className="btn btn-outline-dark">Search</button>&nbsp;
+            <button type="submit" className="btn btn-outline-dark">Reset</button>
+            </form>
         </div>
       </nav>
 
@@ -55,6 +56,7 @@ const ProductsListPage: React.FC = () => {
             <th scope="col">Id</th>
             <th scope="col">Name</th>
             <th scope="col">Details</th>
+            <th scope="col">Image</th>
             <th scope="col" className="text-center">Action</th>
           </tr>
         </thead>
@@ -65,6 +67,9 @@ const ProductsListPage: React.FC = () => {
                 <th scope="row">{item.id}</th>
                 <td>{item.name}</td>
                 <td>{item.detail}</td>
+                <td>
+                    <img src="images/{item.image}" alt="image"/>
+                  </td>
                 <td className="text-center">
                   <button type="button" className="btn btn-warning">Edit</button>&nbsp;
                   <button type="button" className="btn btn-danger">Delete</button>
