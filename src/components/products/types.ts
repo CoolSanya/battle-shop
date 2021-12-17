@@ -34,6 +34,13 @@ export interface ProductsState {
     last_page: number;
 }
 
+export type ProductErrors = {
+    id: string,
+    name: string,
+    detail:string,
+    image: string,
+    error: string
+}
 
 export interface FetchProductsAction {
     type: ProductsActionTypes.FETCH_PRODUCTS,

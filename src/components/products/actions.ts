@@ -9,7 +9,7 @@ import {
   IProductItem,
  } from "./types";
 
- import axios, { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 
 export const fetchProducts = (search: ISearchProduct) => {
   return async (dispatch: Dispatch<ProductActions>) => {

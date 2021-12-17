@@ -11,8 +11,7 @@ export const validationFields = () => {
         
         password: Yup.string()
             .required('Вкажіть пароль.') 
-            .min(5, 'Пароль має містить мінімум 5 символів.')
-            .matches(/[a-zA-Z]/, 'Пароль має містить латинські символи.'),
+            .min(6, 'Пароль має містить мінімум 6 символів.'),
 
         password_confirmation: Yup.string()
             .oneOf([Yup.ref('password'),null], "Паролі не співпадають")
