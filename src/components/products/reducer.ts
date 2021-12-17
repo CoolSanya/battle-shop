@@ -13,6 +13,14 @@ export const productsReducer = (state = initialState, action: ProductActions) : 
                 ...state,
                 ...action.payload
             };
+        case ProductsActionTypes.DELETE_PRODUCT:
+            var tmpList = state.products.filter((value, index, arr) => {
+                return value.id != action.payload.id
+            });
+            return {
+                ...state,
+                products: tmpList
+            };
         default:
             return state;
     }
