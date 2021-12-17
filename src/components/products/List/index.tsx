@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { useActions } from "../../../hooks/useActions";
 import { useTypedSelector } from "../../../hooks/useTypedSelector";
-import { ISearchProduct } from "../types";
+import { ISearchProduct, ProductErrors } from "../types";
+import { toast } from "react-toastify";
+import { deleteProduct } from "../actions";
 import qs from 'qs';
 
 const ProductsListPage: React.FC = () => {
@@ -26,6 +28,20 @@ const ProductsListPage: React.FC = () => {
       }
       getProducts();
   }, [search]);
+
+  const handleDelete = (id: number) => {
+    setLoading(true);
+    try {
+      deleteProduct(id);
+      setLoading(false);
+      toast.success(`Продукт з номером: ${id} успішно видалено.`)
+    } catch (error) {
+        const serverError = error as ProductErrors;
+          if (serverError.error) {
+            return Promise.reject(serverError.error);
+          }
+    }
+  }
 
   const buttons = [];
   for (var i = 1; i <= last_page; i++) {
@@ -72,7 +88,7 @@ const ProductsListPage: React.FC = () => {
                   </td>
                 <td className="text-center">
                   <button type="button" className="btn btn-warning">Edit</button>&nbsp;
-                  <button type="button" className="btn btn-danger">Delete</button>
+                  <button type="button" className="btn btn-danger" onClick={() => handleDelete(item.id)}>Delete</button>
                 </td>
               </tr>
             );

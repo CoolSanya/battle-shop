@@ -7,6 +7,7 @@ import {
   ISearchProduct,
   IAddProductResponse,
   IProductItem,
+  ProductErrors,
  } from "./types";
 
 import axios, { AxiosError } from "axios";
@@ -26,9 +27,13 @@ export const fetchProducts = (search: ISearchProduct) => {
         },
       });
       return Promise.resolve();
-    } catch (ex) {
-      console.log("Problem fetch");
-      return Promise.reject();
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const serverError = error as AxiosError<ProductErrors>;
+        if (serverError && serverError.response) {
+          return Promise.reject(serverError.response.data)
+        }
+      }
     }
   };
 };
@@ -37,10 +42,32 @@ export const addProduct = (product: IProductItem) => {
   return async (dispatch: Dispatch<ProductActions>) => {
     try {
       const responce = await http.post<IAddProductResponse>('api/products', product);
-    } catch (ex) {
-      if (axios.isAxiosError(ex)) {
-        console.log("error: ", ex);
-        
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const serverError = error as AxiosError<ProductErrors>;
+        if (serverError && serverError.response) {
+          return Promise.reject(serverError.response.data)
+        }
+      }
+    }
+  }
+}
+
+export const deleteProduct = (id: number) => {
+  return async (dispatch: Dispatch<ProductActions>) => {
+    try {
+      const response = await http.delete<IAddProductResponse>(`api/products/${id}`);
+      const {data} = response.data;
+      dispatch({
+        type: ProductsActionTypes.DELETE_PRODUCT,
+        payload: data
+      });
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const serverError = error as AxiosError<ProductErrors>;
+        if (serverError && serverError.response) {
+          return Promise.reject(serverError.response.data)
+        }
       }
     }
   }

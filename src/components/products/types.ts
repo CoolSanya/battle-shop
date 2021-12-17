@@ -24,6 +24,12 @@ export interface IAddProductResponse {
     message: string
 }
 
+export interface IDeleteProductResponce {
+    data: IProductItem,
+    success: boolean,
+    message: string
+}
+
 export interface ISearchProduct {
     page?: null|string|number,
     name?: null|string
@@ -47,4 +53,9 @@ export interface FetchProductsAction {
     payload: ProductsState
 }
 
-export type ProductActions = FetchProductsAction;
+export interface DeleteProductsAction {
+    type: ProductsActionTypes.DELETE_PRODUCT,
+    payload: IProductItem
+}
+
+export type ProductActions = FetchProductsAction | DeleteProductsAction;
