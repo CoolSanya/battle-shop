@@ -133,7 +133,7 @@ const RegisterPage = () => {
 
 };
 
-// export default RegisterPage;
+export default RegisterPage;
 
 // import React, { useEffect, useRef, useState } from "react";
 // import InputGroup from "../../common/InputGroup";

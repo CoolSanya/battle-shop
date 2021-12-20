@@ -49,10 +49,11 @@ const ProductsListPage: React.FC = () => {
   }
 
   return (
-    <>
+    <>    
       <nav className="navbar navbar-expand navbar-light bg-light">
           <div className="d-flex">
             <Link className="btn btn-outline-primary" to="/products/add">Add product</Link>&nbsp;
+            <Link className="btn btn-warning" to="/products/edit">Edit</Link>&nbsp;
             {/* <button type="submit" className="btn btn-outline-primary">Add</button>&nbsp; */}
             <form className="d-flex">
             <input className="form-control me-sm-2" type="text" name="searchName" placeholder="Name"/>
@@ -78,6 +79,8 @@ const ProductsListPage: React.FC = () => {
         </thead>
         <tbody>
           {products.map((item) => {
+            console.log(products);
+            
             return (
               <tr key={item.id}>
                 <th scope="row">{item.id}</th>
@@ -87,7 +90,7 @@ const ProductsListPage: React.FC = () => {
                     <img src="images/{item.image}" alt="image"/>
                   </td>
                 <td className="text-center">
-                  <button type="button" className="btn btn-warning">Edit</button>&nbsp;
+                  <Link className="btn btn-warning" to="/products/edit">Edit</Link>&nbsp;
                   <button type="button" className="btn btn-danger" onClick={() => handleDelete(item.id)}>Delete</button>
                 </td>
               </tr>

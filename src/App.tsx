@@ -9,6 +9,7 @@ import AdminLayout from './components/containers/AdminLayout';
 import NoMatch from './components/NoMatch';
 import ProductsListPage from './components/products/List';
 import AddProduct from './components/products/add';
+import EditProduct from './components/products/edit';
 
 function App () {
   return (
@@ -20,6 +21,7 @@ function App () {
             <Route path="register" element={<RegisterPage />} />
             <Route path="products/list" element={<ProductsListPage />} />
             <Route path="products/add" element={<AddProduct />} />
+            <Route path="products/edit" element={<EditProduct />} />
             
             <Route path="*" element={<NoMatch />} />
           </Route>
