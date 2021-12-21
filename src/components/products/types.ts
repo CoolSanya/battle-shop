@@ -24,6 +24,12 @@ export interface IAddProductResponse {
     message: string
 }
 
+export interface IEditProductResponse {
+    data: IProductItem,
+    success: boolean,
+    message: string
+}
+
 export interface IDeleteProductResponce {
     data: IProductItem,
     success: boolean,

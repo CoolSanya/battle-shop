@@ -53,7 +53,6 @@ const ProductsListPage: React.FC = () => {
       <nav className="navbar navbar-expand navbar-light bg-light">
           <div className="d-flex">
             <Link className="btn btn-outline-primary" to="/products/add">Add product</Link>&nbsp;
-            <Link className="btn btn-warning" to="/products/edit">Edit</Link>&nbsp;
             {/* <button type="submit" className="btn btn-outline-primary">Add</button>&nbsp; */}
             <form className="d-flex">
             <input className="form-control me-sm-2" type="text" name="searchName" placeholder="Name"/>
