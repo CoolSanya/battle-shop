@@ -1,7 +1,7 @@
 export enum ProductsActionTypes {
     FETCH_PRODUCTS="FETCH_PRODUCTS",
     ADD_PRODUCT="ADD_PRODUCT",
-    UPDATE_PRODUCT="UPDATE_PRODUCT",
+    EDIT_PRODUCT="EDIT_PRODUCT",
     DELETE_PRODUCT="DELETE_PRODUCT"
 }
 
@@ -59,9 +59,14 @@ export interface FetchProductsAction {
     payload: ProductsState
 }
 
+export interface EditProductsActions {
+    type: ProductsActionTypes.EDIT_PRODUCT,
+    payload: IProductItem
+}
+
 export interface DeleteProductsAction {
     type: ProductsActionTypes.DELETE_PRODUCT,
     payload: IProductItem
 }
 
-export type ProductActions = FetchProductsAction | DeleteProductsAction;
+export type ProductActions = FetchProductsAction | DeleteProductsAction | EditProductsActions;

@@ -20,7 +20,7 @@ const EditProduct = () => {
     const navigator = useNavigate();
     const [invalid, setInvalid] = useState<string>("");
 
-    const handleSubmit = async (values: IProductItem,) => {
+    const handleSubmit = async (values: IProductItem) => {
         setIsSubmitted(true);
         try {
             await editProduct(values);

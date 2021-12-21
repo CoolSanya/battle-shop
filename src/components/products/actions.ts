@@ -55,10 +55,15 @@ export const addProduct = (product: IProductItem) => {
   }
 }
 
-export const editProduct = (product: IProductItem) => {
+export const editProduct = (id: number) => {
   return async (dispatch: Dispatch<ProductActions>) => {
     try {
-      const responce = await http.post<IEditProductResponse>('api/products', product);
+      const responce = await http.put<IEditProductResponse>(`api/products/${id}`);
+      const {data} = responce.data;
+      dispatch ({
+        type: ProductsActionTypes.EDIT_PRODUCT,
+        payload: data
+      });
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const serverError = error as AxiosError<ProductErrors>;
