@@ -6,6 +6,7 @@ import {
   ProductsActionTypes, 
   ISearchProduct,
   IAddProductResponse,
+  IEditProductResponse,
   IProductItem,
   ProductErrors,
  } from "./types";
@@ -38,10 +39,26 @@ export const fetchProducts = (search: ISearchProduct) => {
   };
 };
 
+
 export const addProduct = (product: IProductItem) => {
   return async (dispatch: Dispatch<ProductActions>) => {
     try {
       const responce = await http.post<IAddProductResponse>('api/products', product);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const serverError = error as AxiosError<ProductErrors>;
+        if (serverError && serverError.response) {
+          return Promise.reject(serverError.response.data)
+        }
+      }
+    }
+  }
+}
+
+export const editProduct = (product: IProductItem) => {
+  return async (dispatch: Dispatch<ProductActions>) => {
+    try {
+      const responce = await http.post<IEditProductResponse>('api/products', product);
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const serverError = error as AxiosError<ProductErrors>;
